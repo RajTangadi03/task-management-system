@@ -22,3 +22,8 @@ UPDATE manager
 SET name = $1, password = $2
 WHERE id = $3;
 """
+
+delete_manager = """
+DELETE FROM manager
+WHERE id = $1;
+"""
