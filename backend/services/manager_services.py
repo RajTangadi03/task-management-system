@@ -9,15 +9,14 @@ class MangerService:
                 data.age,
                 data.email,
                 data.address,
-                data.password,
-                data.creation_time
+                data.password
             )
     
     @staticmethod
     async def read_manager_id(managerId):
         # logic to check id
 
-        row = await ManagerDao.read_user_id(managerId)
+        row = await ManagerDao.read_manager_id(managerId)
         return dict(row) if row else None
     
     @staticmethod

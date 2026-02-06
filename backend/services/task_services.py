@@ -9,8 +9,7 @@ class TaskService:
             data.description, 
             data.assigned_user_id,
             data.status,
-            data.due_date,
-            data.created_date
+            data.due_date
         )
     
     @staticmethod

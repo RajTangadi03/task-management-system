@@ -32,8 +32,7 @@ class UserServices:
                 data.age,
                 data.email,
                 data.address,
-                data.password,
-                data.creation_time
+                data.password
             )
     
     @staticmethod
