@@ -1,7 +1,9 @@
 from fastapi import APIRouter
 from services.user_services import userServices
 
-router = APIRouter()
+router = APIRouter(
+    tags=["Users"]
+)
 
 @router.get('/user/{id}')
 async def userData(id: int):
