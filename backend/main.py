@@ -1,16 +1,16 @@
 from fastapi import FastAPI
-from dao.database import db
-from .controllers import user_controller, user_registration_controller
+from dao import database
+from controllers import user_controller, auth_controller
 
 app = FastAPI()
 
 @app.on_event("startup")
 async def startup():
-    await db.connect()
+    await database.connect_db()
 
 @app.on_event("shutdown")
 async def shutdown():
-    await db.disconnect()
+    await database.close_db()
 
 app.include_router(user_controller.router)
-app.include_router(user_registration_controller.router)
+app.include_router(auth_controller.router)
