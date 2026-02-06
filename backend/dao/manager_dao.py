@@ -26,3 +26,23 @@ class ManagerDao:
         async with db.pool.acquire() as conn:
             rows = await conn.fetch(manager_qurs.read_all_manager)
             return [dict(row) for row in rows]
+        
+    @staticmethod
+    async def update_manager(name, age, email, address, password, id: int):
+        async with db.pool.acquire() as conn:
+            return await conn.fetchval(
+                manager_qurs.update_manager,
+                name,
+                age,
+                email,
+                address,
+                password,
+                id
+            )
+        
+    @staticmethod
+    async def delete_manager(id: int):
+        async with db.pool.acquire() as conn:
+            return await conn.fetchval(
+                manager_qurs.delete_manager, id
+            )

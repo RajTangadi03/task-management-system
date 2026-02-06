@@ -16,3 +16,9 @@ async def show_manager(managerId: int):
 
 async def create_manager(data: managerData):
     return await MangerService.create_manager(data)
+
+async def update_manager(data: managerData, id: int):
+    return await MangerService.update_manager(data, id)
+
+async def delete_manager(id: int):
+    return await MangerService.delete_manager(id)

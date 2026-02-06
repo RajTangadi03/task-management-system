@@ -23,3 +23,11 @@ async def update_task(data: taskUpdateData, id: int):
 @router.delete('/centralControl/delete-task/{id}')
 async def delete_task(id: int):
     return await TaskService.deleteTask(id)
+
+@router.put('/centralControl/update-user/{id}')
+async def update_user(data: userData, id: int):
+    return await UserServices.update_user(data, id)
+
+@router.delete('/centralControl/delete-user/{id}')
+async def delete_user(id: int):
+    return await UserServices.delete_user(id)

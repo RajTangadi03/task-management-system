@@ -22,3 +22,8 @@ async def create_user(data: userData):
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 
+async def update_user(data: userData, id: int):
+    return await UserServices.update_user(data, id)
+
+async def delete_user(id: int):
+    return await UserServices.delete_user(id)

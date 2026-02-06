@@ -19,11 +19,13 @@ FROM manager;
 
 update_manager = """
 UPDATE manager
-SET name = $1, password = $2
-WHERE id = $3;
+SET name = $1, age = $2, email = $3, address = $4, password = $5
+WHERE id = $6
+RETURNING id;
 """
 
 delete_manager = """
 DELETE FROM manager
-WHERE id = $1;
+WHERE id = $1
+RETURNING id;
 """

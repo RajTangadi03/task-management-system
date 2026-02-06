@@ -20,12 +20,14 @@ RETURNING id;
 update_user = """
 UPDATE users
 SET name = $1, age = $2, email = $3, address = $4, password = $5
-WHERE id = $6;
+WHERE id = $6
+RETURNING id;
 """
 
 delete_user = """
 DELETE FROM users
-WHERE id = $1;
+WHERE id = $1
+RETURNING id;
 """
 
 find_email = """

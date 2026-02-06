@@ -23,3 +23,18 @@ class MangerService:
     async def read_all_manager():
         rows = await ManagerDao.read_all_manager()
         return [dict(row) for row in rows]
+    
+    @staticmethod
+    async def update_manager(data, id: int):
+        return await ManagerDao.update_manager(
+                data.name, 
+                data.age,
+                data.email,
+                data.address,
+                data.password,
+                id
+            )
+
+    @staticmethod
+    async def delete_manager(id: int):
+        return await ManagerDao.delete_manager(id)

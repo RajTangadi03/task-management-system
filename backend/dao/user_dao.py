@@ -33,3 +33,23 @@ class UserDAO:
         async with db.pool.acquire() as conn:
             row = await conn.fetchrow(user_qur.find_email, email)
             return True if row else False
+        
+    @staticmethod
+    async def update_user(name, age, email, address, password, id: int):
+        async with db.pool.acquire() as conn:
+            return await conn.fetchval(
+                user_qur.update_user,
+                name, 
+                age,
+                email,
+                address,
+                password,
+                id
+            )
+        
+    @staticmethod
+    async def delete_user(id: int):
+        async with db.pool.acquire() as conn:
+            return await conn.fetchval(
+                user_qur.delete_user, id
+            )

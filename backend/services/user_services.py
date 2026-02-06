@@ -46,3 +46,18 @@ class UserServices:
     async def read_all_user():
         rows = await UserDAO.read_all_user()
         return [dict(row) for row in rows]
+    
+    @staticmethod
+    async def update_user(data, userId: int):
+        return await UserDAO.update_user(
+                data.name, 
+                data.age,
+                data.email,
+                data.address,
+                data.password,
+                userId
+            )
+    
+    @staticmethod
+    async def delete_user(userId: int):
+        return await UserDAO.delete_user(userId)
