@@ -28,3 +28,8 @@ class UserDAO:
             return [dict(row) for row in rows]
         
     
+    @staticmethod
+    async def find_email(email):
+        async with db.pool.acquire() as conn:
+            row = await conn.fetchrow(user_qur.find_email, email)
+            return True if row else False

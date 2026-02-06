@@ -7,14 +7,13 @@ router = APIRouter(
 )
 
 @router.get('/user/{id}')
-async def userData(id: int):
+async def user_Data(id: int):
     return await UserServices.read_user_id(id)
 
 @router.get('/user')
 async def show_all_user():
     return await UserServices.read_all_user()
 
-@router.post('/user-reg')
 async def create_user(data: userData):
     try:
         return await UserServices.create_user(data)

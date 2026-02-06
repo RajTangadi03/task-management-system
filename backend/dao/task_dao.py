@@ -4,7 +4,10 @@ from queries import task_queries
 class TaskDao:
 
     @staticmethod
-    async def create_task(title, description, assigned_user_id, status, due_date, created_date):
+    async def create_task(title, description, assigned_user_id, status, due_date):
+        if due_date and due_date.tzinfo is not None:
+            due_date = due_date.replace(tzinfo=None)
+        
         async with db.pool.acquire() as conn:
             return await conn.fetchval(
                 task_queries.create_task,
@@ -13,14 +16,13 @@ class TaskDao:
                 assigned_user_id,
                 status,
                 due_date,
-                None,
-                created_date
+                None
             )
         
     @staticmethod
     async def read_task_id(taskId: int):
         async with db.pool.acquire() as conn:
-            row = await conn.fetchrow(task_queries.read_user_id, taskId)
+            row = await conn.fetchrow(task_queries.read_task_id, taskId)
             return dict(row) if row else None
         
     @staticmethod

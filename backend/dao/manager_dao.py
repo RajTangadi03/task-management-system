@@ -4,7 +4,7 @@ from queries import manager_queries as manager_qurs
 class ManagerDao:
 
     @staticmethod
-    async def create_manager(name, age, email, address, password, creation_time):
+    async def create_manager(name, age, email, address, password):
         async with db.pool.acquire() as conn:
             return await conn.fetchval(
                 manager_qurs.create_manager,
@@ -12,8 +12,7 @@ class ManagerDao:
                 age,
                 email,
                 address,
-                password,
-                creation_time
+                password
             )
         
     @staticmethod

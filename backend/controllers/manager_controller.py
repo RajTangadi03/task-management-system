@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 from services.manager_services import MangerService
+from schemas.manager_schema import managerData
 
 router = APIRouter(
     tags=["Manager"]
@@ -13,6 +14,5 @@ async def show_all_manager():
 async def show_manager(managerId: int):
     return await MangerService.read_manager_id(managerId)
 
-@router.post('/manager/create/{data}')
-async def create_manager(data):
+async def create_manager(data: managerData):
     return await MangerService.create_manager(data)
