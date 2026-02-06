@@ -32,16 +32,30 @@ class TaskDao:
             return [dict(row) for row in rows]
         
     @staticmethod
-    async def update_task(title, description, assigned_user_id, status, due_date, completion_date):
+    async def update_task(title, description, assigned_user_id, status, due_date, completion_date, id: int):
+        if due_date and due_date.tzinfo is not None:
+            due_date = due_date.replace(tzinfo=None)
+
+        if completion_date and completion_date.tzinfo is not None:
+            completion_date = completion_date.replace(tzinfo=None)
+
         async with db.pool.acquire() as conn:
             return await conn.fetchval(
-                task_queries.create_task,
+                task_queries.update_task,
                 title,
                 description, 
                 assigned_user_id,
                 status,
                 due_date,
-                completion_date
+                completion_date,
+                id
             )
-        
+    
+    @staticmethod
+    async def delete_task(id: int):
+        async with db.pool.acquire() as conn:
+            return await conn.fetchval(
+                task_queries.delete_task,
+                id
+            )
     # add comment

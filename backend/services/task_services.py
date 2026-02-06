@@ -24,6 +24,22 @@ class TaskService:
         rows = await TaskDao.read_all_task()
         return [dict(row) for row in rows]
     
-    # update task
+    @staticmethod
+    async def updateTask(data, id: int):
+        return await TaskDao.update_task(
+            data.title,
+            data.description, 
+            data.assigned_user_id,
+            data.status,
+            data.due_date,
+            data.completion_date,
+            id
+        )
+    
+    @staticmethod
+    async def deleteTask(id: int):
+        return await TaskDao.delete_task(
+            id
+        )
 
     # add comment to task

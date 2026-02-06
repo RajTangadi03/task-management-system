@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from services.task_services import TaskService
-from schemas.task_schema import taskData
+from schemas.task_schema import taskData, taskUpdateData
 
 router = APIRouter(
     tags=["Tasks"]
@@ -16,3 +16,9 @@ async def show_task(taskId: int):
 
 async def create_task(data: taskData):
     return await TaskService.createTask(data)
+
+async def update_task(data: taskUpdateData, id: int):
+    return await TaskService.updateTask(data, id)
+
+async def delete_task(id: int):
+    return await TaskService.deleteTask(id)
