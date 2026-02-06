@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from dao import database
-from controllers import user_controller, auth_controller
+from controllers import user_controller, task_controller, manager_controller
 
 app = FastAPI()
 
@@ -13,4 +13,5 @@ async def shutdown():
     await database.close_db()
 
 app.include_router(user_controller.router)
-app.include_router(auth_controller.router)
+app.include_router(task_controller.router)
+app.include_router(manager_controller.router)
