@@ -19,8 +19,8 @@ FROM task;
 
 update_task = """
 UPDATE task
-SET title = $1, description = $2, assigned_user_id = $3, status = $4, due_date = $5
-WHERE $6;
+SET title = $1, description = $2, assigned_user_id = $3, status = $4, due_date = $5, completion_date = $6 
+WHERE $7;
 """
 
 delete_task = """
