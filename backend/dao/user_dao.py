@@ -1,5 +1,5 @@
 from queries import user_queries as user_qur
-from database import db
+from .database import db
 
 class UserDAO:
 
