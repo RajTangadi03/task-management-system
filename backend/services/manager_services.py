@@ -3,7 +3,7 @@ from dao.manager_dao import ManagerDao
 class MangerService:
 
     @staticmethod
-    async def create_user(data):
+    async def create_manager(data):
             return await ManagerDao.create_manager(
                 data.name, 
                 data.age,
