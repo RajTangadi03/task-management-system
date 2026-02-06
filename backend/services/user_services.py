@@ -1,6 +1,6 @@
 from dao.user_dao import UserDAO
 
-class userServices:
+class UserServices:
 
     @staticmethod
     def checkPassword(password: str):
@@ -19,14 +19,14 @@ class userServices:
         if len(password) < 9:
             raise ValueError("Password must have atleast 9 characters.")
 
-        if userServices.checkPassword(password) == False:
+        if UserServices.checkPassword(password) == False:
             raise ValueError("A uppercase, lowercase and A Number between 0-9 must be in password.")
         
         return True
 
     @staticmethod
     async def create_user(data):
-        if await userServices.isCreatable(data.password) == True:
+        if await UserServices.isCreatable(data.password) == True:
             return await UserDAO.create_user(
                 data.name, 
                 data.age,
@@ -41,5 +41,9 @@ class userServices:
         # logic to check id
 
         row = await UserDAO.read_user_id(userId)
-
         return dict(row) if row else None
+    
+    @staticmethod
+    async def read_all_user():
+        rows = await UserDAO.read_all_user()
+        return [dict(row) for row in rows]
