@@ -1,8 +1,8 @@
 # manager: id | name | pass | assigned_tasks | completed_tasks |
 
 create_manager = """
-INSERT INTO manager (name, password)
-VALUES ($1, $2)
+INSERT INTO manager (name, age, email, address, password, creation_time)
+VALUES ($1, $2, $3, $4, $5, NOW())
 RETURNING id;
 """
 
