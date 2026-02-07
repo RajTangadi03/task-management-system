@@ -2,3 +2,6 @@ fastapi
 pydantic
 uvicorn
 asyncpg
+python-jose[cryptography]
+passlib[bcrypt]
+python-multipart

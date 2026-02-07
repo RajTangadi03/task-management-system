@@ -35,3 +35,9 @@ SELECT email
 FROM users
 WHERE email = $1;
 """
+
+checkUserPass = """
+SELECT id
+FROM users
+WHERE name = $1 and password = $2
+"""

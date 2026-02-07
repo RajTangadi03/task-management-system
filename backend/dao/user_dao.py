@@ -53,3 +53,9 @@ class UserDAO:
             return await conn.fetchval(
                 user_qur.delete_user, id
             )
+        
+    @staticmethod
+    async def checkUserPass(name: str, password: str):
+        async with db.pool.acquire() as conn:
+            qurs = await conn.fetchval(name, password)
+            return True if qurs else False

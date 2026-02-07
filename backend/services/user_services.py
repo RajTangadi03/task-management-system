@@ -61,3 +61,7 @@ class UserServices:
     @staticmethod
     async def delete_user(userId: int):
         return await UserDAO.delete_user(userId)
+    
+    @staticmethod
+    async def checkUserPass(name, password):
+        return await UserDAO.checkUserPass(name, password)
