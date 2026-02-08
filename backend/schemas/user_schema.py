@@ -2,9 +2,9 @@ from datetime import datetime
 from pydantic import BaseModel
 
 class userData(BaseModel):
-    name: str
+    username: str
     age: int
     email: str
     address: str
-    password: str
+    hashed_password: str
     creation_time: datetime

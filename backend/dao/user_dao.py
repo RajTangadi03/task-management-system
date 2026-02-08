@@ -1,19 +1,36 @@
 from queries import user_queries as user_qur
 from .database import db
+from passlib.context import CryptContext
+import bcrypt
+
+bcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 
 class UserDAO:
 
+
     @staticmethod
     async def create_user(name, age, email, address, password):
+        # Convert password string to bytes
+        password_bytes = password.encode('utf-8')
+        
+        # Generate salt and hash
+        salt = bcrypt.gensalt()
+        hashed_password = bcrypt.hashpw(password_bytes, salt)
+        
+        # Convert back to string to store in DB
+        db_hash = hashed_password.decode('utf-8')
+        
         async with db.pool.acquire() as conn:
             return await conn.fetchval(
                 user_qur.create_user,
-                name, 
-                age,
-                email,
-                address,
-                password
+                name, age, email, address, db_hash
             )
+
+    @staticmethod
+    async def get_user_for_auth(name: str):
+        async with db.pool.acquire() as conn:
+            row = await conn.fetchrow(user_qur.get_user_by_name, name)
+            return dict(row) if row else None
         
     @staticmethod
     async def read_user_id(userId: int):

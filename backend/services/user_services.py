@@ -15,24 +15,21 @@ class UserServices:
         isEmail = await UserDAO.find_email(password)
         if isEmail == True:
             raise ValueError("Email ID already Exists.")
-        
-        if len(password) < 9:
-            raise ValueError("Password must have atleast 9 characters.")
 
-        if UserServices.checkPassword(password) == False:
-            raise ValueError("A uppercase, lowercase and A Number between 0-9 must be in password.")
+        # if UserServices.checkPassword(password) == False:
+            # raise ValueError("A uppercase, lowercase and A Number between 0-9 must be in password.")
         
         return True
 
     @staticmethod
     async def create_user(data):
-        if await UserServices.isCreatable(data.password) == True:
+        if await UserServices.isCreatable(data.hashed_password) == True:
             return await UserDAO.create_user(
-                data.name, 
+                data.username, 
                 data.age,
                 data.email,
                 data.address,
-                data.password
+                data.hashed_password
             )
     
     @staticmethod
@@ -50,11 +47,11 @@ class UserServices:
     @staticmethod
     async def update_user(data, userId: int):
         return await UserDAO.update_user(
-                data.name, 
+                data.username, 
                 data.age,
                 data.email,
                 data.address,
-                data.password,
+                data.hashed_password,
                 userId
             )
     

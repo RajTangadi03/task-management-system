@@ -12,14 +12,14 @@ FROM users;
 """
 
 create_user = """
-INSERT INTO users (name, age, email, address, password, creation_time)
+INSERT INTO users (username, age, email, address, hashed_password, creation_time)
 VALUES ($1, $2, $3, $4, $5, NOW())
 RETURNING id;
 """
 
 update_user = """
 UPDATE users
-SET name = $1, age = $2, email = $3, address = $4, password = $5
+SET username = $1, age = $2, email = $3, address = $4, hashed_password = $5
 WHERE id = $6
 RETURNING id;
 """
@@ -39,5 +39,9 @@ WHERE email = $1;
 checkUserPass = """
 SELECT id
 FROM users
-WHERE name = $1 and password = $2
+WHERE username = $1 and hashed_password = $2
+"""
+
+get_user_by_name = """
+SELECT id, username, hashed_password FROM users WHERE username = $1;
 """
