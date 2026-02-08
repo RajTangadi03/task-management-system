@@ -29,7 +29,7 @@ class UserDAO:
     @staticmethod
     async def get_user_for_auth(name: str):
         async with db.pool.acquire() as conn:
-            row = await conn.fetchrow(user_qur.get_user_by_name, name)
+            row = await conn.fetchrow(user_qur.get_user_by_email, name)
             return dict(row) if row else None
         
     @staticmethod

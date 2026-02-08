@@ -18,8 +18,8 @@ class Token(BaseModel):
     access_token: str
     token_type: str
 
-async def authenticate_user(username: str, password: str):
-    user = await UserDAO.get_user_for_auth(username)
+async def authenticate_user(email: str, password: str):
+    user = await UserDAO.get_user_for_auth(email)
     if not user:
         return False
     
@@ -50,10 +50,35 @@ async def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm,
             detail='Incorrect username or password'
         )
     
-    token = create_access_token(user['username'], user['id'], timedelta(minutes=20))
-    return {'access_token': token, 'token_type': 'bearer'}
+    token = create_access_token(user['email'], user['id'], timedelta(minutes=60))
+    # return {'access_token': token, 'token_type': 'bearer'}
+    return {
+        "access_token": token,
+        "token_type": "bearer",
+        "role": user["role"],
+        "user_id": user["id"],
+        "name": user["username"]
+    }
 
 # This is the dependency you use in OTHER files to protect routes
+async def get_current_user(token: Annotated[str, Depends(oauth2_bearer)]):
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        user_id: int = payload.get('id')
+        
+        if user_id is None:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Invalid Token')
+        
+        # Fetch the full user record using your existing DAO
+        user = await UserDAO.read_user_id(user_id)
+        
+        if user is None:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='User not found')
+            
+        return user # This returns {'id': 1, 'name': 'Raj', 'email': '...', 'age': 21, ...}
+    except JWTError:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Invalid Token')
+"""
 async def get_current_user(token: Annotated[str, Depends(oauth2_bearer)]):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
@@ -64,3 +89,4 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_bearer)]):
         return {'username': username, 'id': user_id}
     except JWTError:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Invalid Token')
+"""

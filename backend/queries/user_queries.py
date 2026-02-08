@@ -42,6 +42,6 @@ FROM users
 WHERE username = $1 and hashed_password = $2
 """
 
-get_user_by_name = """
-SELECT id, username, hashed_password FROM users WHERE username = $1;
+get_user_by_email = """
+SELECT id, email, role, username, hashed_password FROM users WHERE email = $1;
 """
