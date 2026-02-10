@@ -14,6 +14,10 @@ async def show_all_tasks():
 async def show_task(taskId: int):
     return await TaskService.read_task_id(taskId)
 
+@router.get('/tasks/users/{id}')
+async def show_task_byuser(id: int):
+    return await TaskService.read_taskByUser_id(id)
+
 async def create_task(data: taskData):
     return await TaskService.createTask(data)
 

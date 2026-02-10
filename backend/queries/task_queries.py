@@ -12,6 +12,12 @@ FROM task
 WHERE id = $1;
 """
 
+read_taskByUser_id = """
+SELECT * 
+FROM task 
+WHERE assigned_user_id = $1;
+"""
+
 read_all_task = """
 SELECT * 
 FROM task;

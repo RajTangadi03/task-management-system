@@ -26,7 +26,7 @@ async def create_task(data: taskData, current_user: Annotated[dict, Depends(get_
 
 @router.put('/centralControl/update-task/{id}')
 async def update_task(data: taskUpdateData, id: int, current_user: Annotated[dict, Depends(get_current_user)]):
-    if current_user["role"] not in ["admin", "manager"]:
+    if current_user["role"] not in ["admin", "manager", "user"]:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Insufficient permissions")
     
     return await TaskService.updateTask(data, id)
@@ -51,3 +51,7 @@ async def delete_user(id: int, current_user: Annotated[dict, Depends(get_current
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Insufficient permissions")
     
     return await UserServices.delete_user(id)
+
+@router.get('/centralControl/get-user-tasks/{id}')
+async def show_task(taskId: int):
+    return await TaskService.read_task_id(taskId)

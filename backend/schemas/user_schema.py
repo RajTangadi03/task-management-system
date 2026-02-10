@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Optional
 from pydantic import BaseModel
 
 class userData(BaseModel):
@@ -7,4 +8,4 @@ class userData(BaseModel):
     email: str
     address: str
     hashed_password: str
-    creation_time: datetime
+    creation_time: Optional[datetime] = None

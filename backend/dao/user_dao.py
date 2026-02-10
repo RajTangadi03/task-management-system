@@ -36,7 +36,18 @@ class UserDAO:
     async def read_user_id(userId: int):
         async with db.pool.acquire() as conn:
             row = await conn.fetchrow(user_qur.read_user_id, userId)
-            return dict(row) if row else None
+            # return dict(row) if row else None
+            current_user = dict(row) if row else None
+            if current_user != None:
+                dataToReturn = {
+                    "id": current_user['id'],
+                    "username": current_user['username'],
+                    "email": current_user['email'],
+                    "role": current_user['role']
+                }
+                print(dataToReturn)
+                return dataToReturn
+            return None
         
     @staticmethod
     async def read_all_user():

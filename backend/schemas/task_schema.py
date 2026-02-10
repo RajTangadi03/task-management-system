@@ -1,3 +1,4 @@
+from typing import Optional
 from datetime import datetime
 from pydantic import BaseModel
 
@@ -9,9 +10,9 @@ class taskData(BaseModel):
     due_date: datetime
 
 class taskUpdateData(BaseModel):
-    title: str
+    title: Optional[str]
     description: str
     assigned_user_id: int
-    status: str
+    status: Optional[str]
     due_date: datetime
-    completion_date: datetime
+    completion_date: Optional[str]

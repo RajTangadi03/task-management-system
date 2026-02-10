@@ -41,5 +41,13 @@ class TaskService:
         return await TaskDao.delete_task(
             id
         )
+    
+    @staticmethod
+    async def read_taskByUser_id(taskId: int):
+        # logic to check id
+
+        row = await TaskDao.read_taskByUser_id(taskId)
+        return dict(row) if row else None
+    
 
     # add comment to task

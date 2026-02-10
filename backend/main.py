@@ -1,10 +1,10 @@
 from fastapi import FastAPI
 from dao import database
 from controllers import user_controller, task_controller, manager_controller, central_admin_controller, central_controller, auth_controller
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-from fastapi.middleware.cors import CORSMiddleware
 
 origins = [
     "http://localhost:5173",  # React Vite frontend
